@@ -9,6 +9,7 @@
 
 declare(strict_types=1);
 
+use Tiers\Admin\Settings;
 use Tiers\Container;
 use Tiers\Migrator;
 use Tiers\Service\TiersService;
@@ -20,4 +21,9 @@ return static function (Container $c): void {
 
     // Thin adapter over the storefront-kit DynamicPricingEngine.
     $c->singleton(TiersService::class, static fn (): TiersService => new TiersService());
+
+    // Admin (only needed in wp-admin context).
+    if (is_admin()) {
+        $c->singleton(Settings::class, static fn (): Settings => new Settings());
+    }
 };

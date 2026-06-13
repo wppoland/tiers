@@ -12,7 +12,8 @@ defined('ABSPATH') || exit;
  */
 final class Migrator
 {
-    private const OPTION = 'tiers_db_version';
+    private const OPTION   = 'tiers_db_version';
+    private const SETTINGS = 'tiers_settings';
 
     public function maybeMigrate(): void
     {
@@ -22,9 +23,23 @@ final class Migrator
             return;
         }
 
-        // Example: create tables / seed defaults here.
-        // $this->createWaitlistTable();
+        $this->seedDefaultSettings();
 
         update_option(self::OPTION, VERSION, false);
+    }
+
+    /**
+     * Seed the default settings once, without clobbering an existing config.
+     */
+    private function seedDefaultSettings(): void
+    {
+        if (get_option(self::SETTINGS, null) !== null) {
+            return;
+        }
+
+        /** @var array<string, mixed> $defaults */
+        $defaults = require TIERS_DIR . 'config/defaults.php';
+
+        add_option(self::SETTINGS, $defaults, '', false);
     }
 }
