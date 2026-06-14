@@ -2,14 +2,14 @@
 # This file is distributed under the GPL-2.0-or-later.
 msgid ""
 msgstr ""
-"Project-Id-Version: Tiers 0.2.0\n"
+"Project-Id-Version: tiers 0.2.0\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/tiers\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2026-06-14T10:02:22+00:00\n"
+"POT-Creation-Date: 2026-06-14T10:34:08+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.12.0\n"
 "X-Domain: tiers\n"
@@ -44,104 +44,173 @@ msgstr ""
 msgid "Tiers Settings"
 msgstr ""
 
-#: src/Admin/Settings.php:98
-msgid "Global Volume Pricing Tiers"
-msgstr ""
-
-#: src/Admin/Settings.php:100
-msgid "Define quantity thresholds and the discount to apply when a cart line reaches that quantity. Tiers apply globally to all products. Per-product overrides are available in Tiers PRO."
-msgstr ""
-
-#: src/Admin/Settings.php:110
-msgid "Show pricing table"
-msgstr ""
-
-#: src/Admin/Settings.php:118
-msgid "Table placement"
-msgstr ""
-
-#: src/Admin/Settings.php:126
-msgid "Table heading"
-msgstr ""
-
-#: src/Admin/Settings.php:134
-msgid "Savings column"
-msgstr ""
-
-#: src/Admin/Settings.php:142
-msgid "Cart savings note"
-msgstr ""
-
-#: src/Admin/Settings.php:150
-msgid "Pricing tiers"
-msgstr ""
-
-#: src/Admin/Settings.php:164
-msgid "Product summary (below price)"
-msgstr ""
-
-#: src/Admin/Settings.php:165
-msgid "Before the add-to-cart form"
-msgstr ""
-
-#: src/Admin/Settings.php:166
-msgid "After the add-to-cart form"
-msgstr ""
-
-#: src/Admin/Settings.php:167
-msgid "Product meta area"
-msgstr ""
-
-#: src/Admin/Settings.php:168
-msgid "Only where I place it (shortcode / block)"
-msgstr ""
-
-#: src/Admin/Settings.php:187
-msgid "Display a volume pricing table on single product pages."
-msgstr ""
-
-#: src/Admin/Settings.php:207
-msgid "Where the pricing table appears on the product page. Choose the last option to place it manually with the [tiers_table] shortcode or the \"Volume pricing table\" block."
-msgstr ""
-
-#: src/Admin/Settings.php:225
-msgid "e.g. Buy more, save more"
-msgstr ""
-
-#: src/Admin/Settings.php:228
-msgid "Optional heading shown above the pricing table. Leave blank to hide it."
-msgstr ""
-
-#: src/Admin/Settings.php:248
-msgid "Add a \"You save\" column to the pricing table."
-msgstr ""
-
-#: src/Admin/Settings.php:268
-msgid "Show a per-line \"You save\" note under each discounted cart item."
-msgstr ""
-
-#: src/Admin/Settings.php:283
-msgid "Min. quantity"
-msgstr ""
-
-#: src/Admin/Settings.php:284
-msgid "Discount %"
-msgstr ""
-
-#: src/Admin/Settings.php:285
-msgid "Label (optional)"
-msgstr ""
-
-#: src/Admin/Settings.php:327
+#: src/Admin/Settings.php:97
+#: src/Admin/Settings.php:409
 msgid "Remove"
 msgstr ""
 
-#: src/Admin/Settings.php:336
+#: src/Admin/Settings.php:98
+#: src/Admin/Settings.php:380
+msgid "Minimum quantity"
+msgstr ""
+
+#: src/Admin/Settings.php:99
+#: src/Admin/Settings.php:393
+msgid "Discount percent"
+msgstr ""
+
+#: src/Admin/Settings.php:100
+msgid "Label"
+msgstr ""
+
+#: src/Admin/Settings.php:101
+msgid "Add a tier above to preview how it reads to shoppers."
+msgstr ""
+
+#. translators: %d: minimum quantity (kept as a literal token for JS substitution).
+#: src/Admin/Settings.php:103
+#, php-format
+msgid "Buy %d+"
+msgstr ""
+
+#: src/Admin/Settings.php:122
+msgid "More information"
+msgstr ""
+
+#: src/Admin/Settings.php:146
+msgid "Global Volume Pricing Tiers"
+msgstr ""
+
+#: src/Admin/Settings.php:149
+msgid "Reward bigger orders, automatically"
+msgstr ""
+
+#: src/Admin/Settings.php:150
+msgid "Set quantity thresholds and the discount each one unlocks. When a shopper adds enough of a product to their cart, the matching discount is applied automatically — no coupon codes needed. Tiers apply to every product; per-product overrides are available in Tiers PRO."
+msgstr ""
+
+#: src/Admin/Settings.php:161
+msgid "Show pricing table"
+msgstr ""
+
+#: src/Admin/Settings.php:169
+msgid "Table placement"
+msgstr ""
+
+#: src/Admin/Settings.php:177
+msgid "Table heading"
+msgstr ""
+
+#: src/Admin/Settings.php:185
+msgid "Savings column"
+msgstr ""
+
+#: src/Admin/Settings.php:193
+msgid "Cart savings note"
+msgstr ""
+
+#: src/Admin/Settings.php:201
+msgid "Pricing tiers"
+msgstr ""
+
+#: src/Admin/Settings.php:215
+msgid "Product summary (below price)"
+msgstr ""
+
+#: src/Admin/Settings.php:216
+msgid "Before the add-to-cart form"
+msgstr ""
+
+#: src/Admin/Settings.php:217
+msgid "After the add-to-cart form"
+msgstr ""
+
+#: src/Admin/Settings.php:218
+msgid "Product meta area"
+msgstr ""
+
+#: src/Admin/Settings.php:219
+msgid "Only where I place it (shortcode / block)"
+msgstr ""
+
+#: src/Admin/Settings.php:238
+msgid "Display a volume pricing table on single product pages."
+msgstr ""
+
+#: src/Admin/Settings.php:243
+msgid "Shows shoppers the quantity breaks and the price they unlock at each level — a proven nudge to buy more. The discount still applies in the cart even with this turned off."
+msgstr ""
+
+#: src/Admin/Settings.php:264
+msgid "Controls where the table is auto-inserted on the product page. Pick \"Only where I place it\" to position it yourself with the [tiers_table] shortcode or the Volume pricing table block."
+msgstr ""
+
+#: src/Admin/Settings.php:268
+msgid "Where the pricing table appears on the product page. Choose the last option to place it manually with the [tiers_table] shortcode or the \"Volume pricing table\" block."
+msgstr ""
+
+#: src/Admin/Settings.php:286
+msgid "e.g. Buy more, save more"
+msgstr ""
+
+#: src/Admin/Settings.php:291
+msgid "A short title rendered directly above the table, e.g. \"Buy more, save more\". Leave it blank to show just the table."
+msgstr ""
+
+#: src/Admin/Settings.php:295
+msgid "Optional heading shown above the pricing table. Leave blank to hide it."
+msgstr ""
+
+#: src/Admin/Settings.php:315
+msgid "Add a \"You save\" column to the pricing table."
+msgstr ""
+
+#: src/Admin/Settings.php:320
+msgid "Adds a column showing the cash saved per unit at each tier. Concrete savings figures convert better than a percentage alone."
+msgstr ""
+
+#: src/Admin/Settings.php:339
+msgid "Show a per-line \"You save\" note under each discounted cart item."
+msgstr ""
+
+#: src/Admin/Settings.php:344
+msgid "Reassures shoppers in the cart by printing the exact amount saved under each qualifying line item. Reinforces the discount right before checkout."
+msgstr ""
+
+#: src/Admin/Settings.php:357
+msgid "No tiers yet. Add your first quantity break below — for example, 10% off when a shopper buys 5 or more."
+msgstr ""
+
+#: src/Admin/Settings.php:362
+msgid "Min. quantity"
+msgstr ""
+
+#: src/Admin/Settings.php:363
+msgid "Discount %"
+msgstr ""
+
+#: src/Admin/Settings.php:364
+msgid "Label (optional)"
+msgstr ""
+
+#: src/Admin/Settings.php:403
+msgid "Tier label (optional)"
+msgstr ""
+
+#: src/Admin/Settings.php:418
 msgid "+ Add tier"
 msgstr ""
 
-#: src/Admin/Settings.php:341
+#: src/Admin/Settings.php:423
+msgid "Live preview"
+msgstr ""
+
+#: src/Admin/Settings.php:430
 msgid "The highest matching tier wins. E.g., buying 12 units gets the \"10+\" discount, not the \"5+\" discount."
+msgstr ""
+
+#: src/Admin/Settings.php:435
+msgid "Minimum quantity is the smallest cart amount that unlocks the tier. Discount % is taken off the regular price. Label is optional copy a shopper sees (e.g. \"Bulk deal\"). Tiers are sorted automatically by quantity."
 msgstr ""
 
 #. translators: %s: formatted saved amount
@@ -150,46 +219,54 @@ msgstr ""
 msgid "You save %s"
 msgstr ""
 
-#: templates/single-product/pricing-table.php:24
+#: templates/single-product/pricing-table.php:27
+msgid "No volume discounts are available for this product yet."
+msgstr ""
+
+#: templates/single-product/pricing-table.php:45
 msgid "Volume pricing"
 msgstr ""
 
-#: templates/single-product/pricing-table.php:30
+#: templates/single-product/pricing-table.php:51
 msgid "Volume pricing tiers"
 msgstr ""
 
-#: templates/single-product/pricing-table.php:34
+#: templates/single-product/pricing-table.php:55
 msgid "Quantity"
 msgstr ""
 
-#: templates/single-product/pricing-table.php:35
+#: templates/single-product/pricing-table.php:56
 msgid "Discount"
 msgstr ""
 
-#: templates/single-product/pricing-table.php:36
+#: templates/single-product/pricing-table.php:57
 msgid "Price"
 msgstr ""
 
-#: templates/single-product/pricing-table.php:38
+#: templates/single-product/pricing-table.php:59
 msgid "You save"
 msgstr ""
 
 #. translators: 1: min quantity, 2: max quantity
-#: templates/single-product/pricing-table.php:62
+#: templates/single-product/pricing-table.php:84
 #, php-format
 msgctxt "quantity range"
 msgid "%1$d – %2$d"
 msgstr ""
 
 #. translators: %d: minimum quantity
-#: templates/single-product/pricing-table.php:69
+#: templates/single-product/pricing-table.php:91
 #, php-format
 msgctxt "quantity, no upper limit"
 msgid "%d+"
 msgstr ""
 
+#: templates/single-product/pricing-table.php:98
+msgid "Best price"
+msgstr ""
+
 #. translators: %s: discount percentage
-#: templates/single-product/pricing-table.php:79
+#: templates/single-product/pricing-table.php:108
 #, php-format
 msgid "%s%% off"
 msgstr ""
