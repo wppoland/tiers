@@ -122,12 +122,7 @@ final class TiersService implements HasHooks {
 	 * be shown.
 	 */
 	public function enqueue_assets(): void {
-		wp_register_style(
-			'tiers-pricing',
-			\Tiers\Plugin::instance()->url( 'assets/css/tiers.css' ),
-			array(),
-			\Tiers\VERSION,
-		);
+		$this->register_style();
 
 		if ( ! is_product() ) {
 			return;
@@ -140,6 +135,27 @@ final class TiersService implements HasHooks {
 		}
 
 		wp_enqueue_style( 'tiers-pricing' );
+	}
+
+	/**
+	 * Register the front-end style if it has not been registered yet.
+	 *
+	 * Registration normally happens on `wp_enqueue_scripts`, but shortcode and
+	 * block render paths can run before (or without) that hook — e.g. a block
+	 * server-render during a REST editor preview. Registering on demand keeps
+	 * enqueue_style() from silently no-opping in those contexts.
+	 */
+	private function register_style(): void {
+		if ( wp_style_is( 'tiers-pricing', 'registered' ) ) {
+			return;
+		}
+
+		wp_register_style(
+			'tiers-pricing',
+			\Tiers\Plugin::instance()->url( 'assets/css/tiers.css' ),
+			array(),
+			\Tiers\VERSION,
+		);
 	}
 
 	/**
@@ -194,6 +210,17 @@ final class TiersService implements HasHooks {
 			}
 
 			$discounted = round( $regular * ( 1.0 - $percent / 100.0 ), wc_get_price_decimals() );
+
+			// Never raise the price: if the product is already cheaper (e.g. on
+			// sale, or a deeper tier already ran in an earlier pass of this
+			// multi-fire hook), leave the lower price in place. This also keeps
+			// the operation idempotent and avoids double-discounting.
+			$current = (float) $product->get_price();
+
+			if ( $current > 0 && $discounted >= $current ) {
+				continue;
+			}
+
 			$product->set_price( (string) $discounted );
 		}
 	}
@@ -236,6 +263,7 @@ final class TiersService implements HasHooks {
 			return '';
 		}
 
+		$this->register_style();
 		wp_enqueue_style( 'tiers-pricing' );
 
 		return $this->get_table_html( $product );
@@ -255,6 +283,7 @@ final class TiersService implements HasHooks {
 			return '';
 		}
 
+		$this->register_style();
 		wp_enqueue_style( 'tiers-pricing' );
 
 		return $this->get_table_html( $product );
