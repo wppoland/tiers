@@ -1,0 +1,23 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 3,
+	"name": "tiers/tiers-table",
+	"version": "0.2.0",
+	"title": "Volume pricing table",
+	"category": "woocommerce",
+	"icon": "editor-table",
+	"description": "Server-rendered volume pricing table for the current or a chosen WooCommerce product.",
+	"keywords": ["woocommerce", "pricing", "tiers", "volume", "quantity"],
+	"textdomain": "tiers",
+	"supports": {
+		"html": false,
+		"align": ["wide", "full"]
+	},
+	"attributes": {
+		"productId": {
+			"type": "number",
+			"default": 0
+		}
+	},
+	"editorScript": "file:./index.js"
+}

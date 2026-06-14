@@ -1,14 +1,14 @@
-=== Tiers – Volume Pricing for WooCommerce ===
+=== Tiers ===
 Contributors: motylanogha
 Tags: woocommerce, volume pricing, quantity discount, bulk pricing, tiered pricing
-Requires at least: 6.4
+Requires at least: 6.5
 Tested up to: 7.0
 Requires PHP: 8.1
-Stable tag: 0.1.0
+Stable tag: 0.2.0
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
-Simple, accessible volume / quantity-based pricing tiers for WooCommerce. Configure discount bands in seconds, display a clean pricing table on product pages. No jQuery.
+Accessible quantity / volume pricing tiers for WooCommerce. Set discount bands and show a clean, server-rendered pricing table. No jQuery.
 
 == Description ==
 
@@ -29,12 +29,16 @@ Tiers adds volume pricing to WooCommerce products: define quantity thresholds an
 * Define unlimited global pricing tiers (min quantity → discount percentage)
 * Server-rendered volume pricing table on single product pages
 * Tiers sorted and applied automatically — highest matching tier wins
+* Choose where the table appears: product summary, before/after the add-to-cart form, the product meta area, or place it manually
+* `[tiers_table]` shortcode and a "Volume pricing table" block for manual placement anywhere
+* Optional custom table heading and an optional "You save" column
+* Optional per-line "You save" note under each discounted cart item
 * Optional table visibility toggle
 * Admin settings with a live tier builder (add / remove rows)
+* Fully translatable (Text Domain `tiers`, translations in `/languages`)
 * `tiers/product_tiers` filter for per-product or role-based overrides (PRO)
-* Compatible with simple and variable products
 
-**This is an early release (MVP).** Documentation: https://plogins.com/tiers/docs/
+**Documentation:** https://plogins.com/tiers/docs/
 
 == Installation ==
 
@@ -84,6 +88,16 @@ https://github.com/wppoland/tiers
 There is no build step. All shipped assets are the source. There is no obfuscation.
 
 == Changelog ==
+
+= 0.2.0 =
+* New: configurable table placement (product summary, before/after add-to-cart form, product meta, or manual only).
+* New: `[tiers_table]` shortcode and a "Volume pricing table" block for placing the table anywhere.
+* New: optional custom table heading.
+* New: optional "You save" column in the pricing table.
+* New: optional per-line "You save" note in the cart.
+* New: full internationalisation — Domain Path `/languages`, bundled `tiers.pot`, and `load_plugin_textdomain()`.
+* Fix: define the missing `Tiers\PLUGIN_DIR` constant so the plugin boots reliably.
+* Housekeeping: removed an unused template; expanded coding-standards coverage to templates and blocks.
 
 = 0.1.0 =
 * Initial release: global volume pricing tiers, server-rendered pricing table on product pages, admin tier builder, `tiers/product_tiers` filter for PRO overrides. No jQuery, no layout shift, WCAG 2.2 AA.

@@ -1,0 +1,185 @@
+/* ==========================================================================
+   Tiers – Admin settings page
+   Modern, themeable, accessible. Layered on top of core WP admin styles.
+   ========================================================================== */
+
+.tiers-settings {
+	--tiers-accent: #2271b1;
+	--tiers-accent-soft: #f0f6fc;
+	--tiers-border: #dcdcde;
+	--tiers-radius: 8px;
+	--tiers-muted: #646970;
+	--tiers-good: #00a32a;
+	--tiers-gap: clamp(0.75rem, 1.5vw, 1.25rem);
+}
+
+/* Intro card sits above the settings form. */
+.tiers-settings__intro {
+	max-width: 46rem;
+	margin-block: 0.5rem 1.25rem;
+	padding: clamp(0.85rem, 2vw, 1.25rem);
+	border: 1px solid var(--tiers-border);
+	border-inline-start: 4px solid var(--tiers-accent);
+	border-radius: var(--tiers-radius);
+	background: #fff;
+}
+
+.tiers-settings__intro h2 {
+	margin-block-start: 0;
+	font-size: 1.05rem;
+}
+
+.tiers-settings__intro p {
+	margin-block-end: 0;
+	color: var(--tiers-muted);
+}
+
+/* Accessible info affordance next to a field label. */
+.tiers-help {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	inline-size: 1.15rem;
+	block-size: 1.15rem;
+	margin-inline-start: 0.35rem;
+	padding: 0;
+	border: 1px solid var(--tiers-border);
+	border-radius: 999px;
+	background: #fff;
+	color: var(--tiers-accent);
+	font-size: 0.72rem;
+	font-weight: 700;
+	line-height: 1;
+	cursor: help;
+	vertical-align: middle;
+}
+
+.tiers-help:hover,
+.tiers-help:focus-visible {
+	background: var(--tiers-accent);
+	color: #fff;
+	border-color: var(--tiers-accent);
+	outline: none;
+}
+
+.tiers-help:focus-visible {
+	box-shadow: 0 0 0 2px #fff, 0 0 0 4px var(--tiers-accent);
+}
+
+/* Popover tooltip body (native Popover API) with non-popover fallback. */
+.tiers-tip {
+	max-inline-size: 22rem;
+	margin: 0;
+	padding: 0.6rem 0.8rem;
+	border: 1px solid var(--tiers-border);
+	border-radius: var(--tiers-radius);
+	background: #1d2327;
+	color: #fff;
+	font-size: 0.82rem;
+	line-height: 1.45;
+	box-shadow: 0 6px 24px rgba(0, 0, 0, 0.18);
+}
+
+/* When the Popover API is unsupported, [popover] elements stay block-level;
+   hide them and rely on the title-attribute fallback instead. */
+@supports not selector(:popover-open) {
+	.tiers-tip {
+		display: none;
+	}
+}
+
+/* Tier builder table. */
+#tiers-builder {
+	max-width: 46rem;
+}
+
+#tiers-table .tiers-remove-row {
+	color: #b32d2e;
+}
+
+#tiers-table .tiers-remove-row:hover {
+	color: #fff;
+	background: #b32d2e;
+	border-color: #b32d2e;
+}
+
+#tiers-table input:invalid {
+	border-color: #d63638;
+	box-shadow: 0 0 0 1px #d63638;
+}
+
+/* Friendly empty state shown when no tiers exist. */
+.tiers-empty {
+	margin-block: 0.5rem 1rem;
+	padding: clamp(0.85rem, 2vw, 1.25rem);
+	border: 1px dashed var(--tiers-border);
+	border-radius: var(--tiers-radius);
+	background: var(--tiers-accent-soft);
+	color: var(--tiers-muted);
+	text-align: center;
+}
+
+.tiers-empty[hidden] {
+	display: none;
+}
+
+/* Live preview of how a tier reads to a shopper. */
+.tiers-preview {
+	margin-block-start: 1rem;
+	padding: clamp(0.75rem, 2vw, 1rem);
+	border: 1px solid var(--tiers-border);
+	border-radius: var(--tiers-radius);
+	background: #fff;
+}
+
+.tiers-preview__title {
+	margin: 0 0 0.5rem;
+	font-size: 0.78rem;
+	font-weight: 600;
+	text-transform: uppercase;
+	letter-spacing: 0.04em;
+	color: var(--tiers-muted);
+}
+
+.tiers-preview__list {
+	display: flex;
+	flex-wrap: wrap;
+	gap: var(--tiers-gap);
+	margin: 0;
+	padding: 0;
+	list-style: none;
+}
+
+.tiers-preview__item {
+	flex: 1 1 8rem;
+	min-inline-size: 7rem;
+	padding: 0.6rem 0.75rem;
+	border: 1px solid var(--tiers-border);
+	border-radius: var(--tiers-radius);
+	text-align: center;
+}
+
+.tiers-preview__qty {
+	display: block;
+	font-size: 0.78rem;
+	color: var(--tiers-muted);
+}
+
+.tiers-preview__discount {
+	display: block;
+	font-size: 1.15rem;
+	font-weight: 700;
+	color: var(--tiers-good);
+}
+
+.tiers-preview__empty {
+	margin: 0;
+	color: var(--tiers-muted);
+}
+
+@media (prefers-reduced-motion: no-preference) {
+	.tiers-help,
+	#tiers-table .tiers-remove-row {
+		transition: background-color 0.15s ease, color 0.15s ease;
+	}
+}

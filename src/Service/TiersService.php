@@ -38,18 +38,97 @@ final class TiersService implements HasHooks {
 	) {}
 
 	/**
+	 * Supported placement hooks for the product-page pricing table.
+	 *
+	 * Maps a stored placement key to a WooCommerce single-product action hook
+	 * and its priority. `shortcode` is intentionally absent: it disables the
+	 * automatic placement so the table only renders via the block/shortcode.
+	 *
+	 * @return array<string, array{hook: string, priority: int}>
+	 */
+	public static function placements(): array {
+		return array(
+			'summary'      => array(
+				'hook'     => 'woocommerce_single_product_summary',
+				'priority' => 26,
+			),
+			'before_cart'  => array(
+				'hook'     => 'woocommerce_before_add_to_cart_form',
+				'priority' => 10,
+			),
+			'after_cart'   => array(
+				'hook'     => 'woocommerce_after_add_to_cart_form',
+				'priority' => 10,
+			),
+			'product_meta' => array(
+				'hook'     => 'woocommerce_product_meta_start',
+				'priority' => 5,
+			),
+		);
+	}
+
+	/**
 	 * Register WordPress hooks.
 	 */
 	public function registerHooks(): void {
 		add_action( 'woocommerce_before_calculate_totals', array( $this, 'apply_cart_discounts' ), 25 );
-		add_action( 'woocommerce_single_product_summary', array( $this, 'render_pricing_table' ), 26 );
 		add_action( 'wp_enqueue_scripts', array( $this, 'enqueue_assets' ) );
+
+		$settings  = $this->global_settings();
+		$placement = (string) ( $settings['placement'] ?? 'summary' );
+
+		if ( ( $settings['show_table'] ?? true ) && 'shortcode' !== $placement ) {
+			$placements = self::placements();
+			$target     = $placements[ $placement ] ?? $placements['summary'];
+			add_action( $target['hook'], array( $this, 'render_pricing_table' ), $target['priority'] );
+		}
+
+		// Per-line savings note in the cart (display only).
+		if ( $settings['cart_savings_note'] ?? false ) {
+			add_filter( 'woocommerce_cart_item_subtotal', array( $this, 'render_cart_savings_note' ), 10, 3 );
+		}
+
+		// Shortcode + block render callback (always available).
+		add_shortcode( 'tiers_table', array( $this, 'render_shortcode' ) );
+
+		// Boot runs on `init`; register the block on the same hook. If we are
+		// already inside init, hook a slightly later priority so it still fires.
+		if ( did_action( 'init' ) ) {
+			add_action( 'init', array( $this, 'register_block' ), 20 );
+		} else {
+			add_action( 'init', array( $this, 'register_block' ) );
+		}
 	}
 
 	/**
-	 * Enqueue front-end assets on single product pages (CSS only).
+	 * Register the server-rendered Tiers table block.
+	 */
+	public function register_block(): void {
+		$metadata = \Tiers\PLUGIN_DIR . '/blocks/tiers-table';
+
+		if ( function_exists( 'register_block_type' ) && file_exists( $metadata . '/block.json' ) ) {
+			register_block_type(
+				$metadata,
+				array( 'render_callback' => array( $this, 'render_block' ) )
+			);
+		}
+	}
+
+	/**
+	 * Register and conditionally enqueue front-end assets (CSS only, no jQuery).
+	 *
+	 * The style is registered unconditionally so the shortcode/block can enqueue
+	 * it on demand, and auto-enqueued on single product pages when a table will
+	 * be shown.
 	 */
 	public function enqueue_assets(): void {
+		wp_register_style(
+			'tiers-pricing',
+			\Tiers\Plugin::instance()->url( 'assets/css/tiers.css' ),
+			array(),
+			\Tiers\VERSION,
+		);
+
 		if ( ! is_product() ) {
 			return;
 		}
@@ -60,12 +139,7 @@ final class TiersService implements HasHooks {
 			return;
 		}
 
-		wp_enqueue_style(
-			'tiers-pricing',
-			\Tiers\Plugin::instance()->url( 'assets/css/tiers.css' ),
-			array(),
-			\Tiers\VERSION,
-		);
+		wp_enqueue_style( 'tiers-pricing' );
 	}
 
 	/**
@@ -125,7 +199,7 @@ final class TiersService implements HasHooks {
 	}
 
 	/**
-	 * Render the pricing table below the price on single product pages.
+	 * Render the pricing table on single product pages (auto placement).
 	 */
 	public function render_pricing_table(): void {
 		global $product;
@@ -140,19 +214,144 @@ final class TiersService implements HasHooks {
 			return;
 		}
 
+		echo $this->get_table_html( $product ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Output is escaped inside the template.
+	}
+
+	/**
+	 * Render the `[tiers_table]` shortcode.
+	 *
+	 * @param array<string, mixed>|string $atts Shortcode attributes.
+	 * @return string Rendered table HTML, or empty string when nothing to show.
+	 */
+	public function render_shortcode( array|string $atts = array() ): string {
+		$atts = shortcode_atts(
+			array( 'product_id' => 0 ),
+			is_array( $atts ) ? $atts : array(),
+			'tiers_table',
+		);
+
+		$product = $this->resolve_product( (int) $atts['product_id'] );
+
+		if ( ! $product instanceof \WC_Product ) {
+			return '';
+		}
+
+		wp_enqueue_style( 'tiers-pricing' );
+
+		return $this->get_table_html( $product );
+	}
+
+	/**
+	 * Render the Tiers table block (server-side).
+	 *
+	 * @param array<string, mixed> $attributes Block attributes.
+	 * @return string Rendered table HTML.
+	 */
+	public function render_block( array $attributes = array() ): string {
+		$product_id = isset( $attributes['productId'] ) ? (int) $attributes['productId'] : 0;
+		$product    = $this->resolve_product( $product_id );
+
+		if ( ! $product instanceof \WC_Product ) {
+			return '';
+		}
+
+		wp_enqueue_style( 'tiers-pricing' );
+
+		return $this->get_table_html( $product );
+	}
+
+	/**
+	 * Append a per-line "You save" note to the cart item subtotal.
+	 *
+	 * Display only — no pricing logic. The discount itself is applied in
+	 * apply_cart_discounts().
+	 *
+	 * @param string               $subtotal  Formatted subtotal HTML.
+	 * @param array<string, mixed> $cart_item Cart item data.
+	 * @param string               $cart_item_key Cart item key (unused).
+	 * @return string
+	 */
+	public function render_cart_savings_note( string $subtotal, array $cart_item, string $cart_item_key ): string {
+		unset( $cart_item_key );
+
+		$product = $cart_item['data'] ?? null;
+		$qty     = (int) ( $cart_item['quantity'] ?? 0 );
+
+		if ( ! $product instanceof \WC_Product || $qty <= 0 ) {
+			return $subtotal;
+		}
+
+		$tiers = $this->get_active_tiers_for_product( $product );
+		$match = empty( $tiers ) ? null : $this->find_matching_tier( $tiers, $qty, $product );
+
+		if ( null === $match ) {
+			return $subtotal;
+		}
+
+		$regular = (float) $product->get_regular_price();
+
+		if ( $regular <= 0 ) {
+			return $subtotal;
+		}
+
+		$current = (float) $product->get_price();
+		$saved   = round( ( $regular - $current ) * $qty, wc_get_price_decimals() );
+
+		if ( $saved <= 0 ) {
+			return $subtotal;
+		}
+
+		return $subtotal . '<br /><small class="tiers-cart-savings">' . sprintf(
+			/* translators: %s: formatted saved amount */
+			esc_html__( 'You save %s', 'tiers' ),
+			wp_kses_post( wc_price( $saved ) )
+		) . '</small>';
+	}
+
+	/**
+	 * Build the pricing-table HTML for a product (shared by all render paths).
+	 *
+	 * @param \WC_Product $product The product to render the table for.
+	 * @return string Captured template output, or empty string when no tiers.
+	 */
+	private function get_table_html( \WC_Product $product ): string {
 		$tiers = $this->get_active_tiers_for_product( $product );
 
 		if ( empty( $tiers ) ) {
-			return;
+			return '';
 		}
 
+		$settings = $this->global_settings();
+
+		ob_start();
 		$this->template_loader->include(
 			'single-product/pricing-table',
 			array(
-				'product' => $product,
-				'tiers'   => $tiers,
+				'product'      => $product,
+				'tiers'        => $tiers,
+				'heading'      => (string) ( $settings['table_heading'] ?? '' ),
+				'show_savings' => (bool) ( $settings['show_savings'] ?? false ),
 			),
 		);
+
+		return (string) ob_get_clean();
+	}
+
+	/**
+	 * Resolve a product from an explicit id, falling back to the global product.
+	 *
+	 * @param int $product_id Explicit product id, or 0 to use the current product.
+	 * @return \WC_Product|null
+	 */
+	private function resolve_product( int $product_id ): ?\WC_Product {
+		if ( $product_id > 0 ) {
+			$product = wc_get_product( $product_id );
+			return $product instanceof \WC_Product ? $product : null;
+		}
+
+		global $product;
+
+		return $product instanceof \WC_Product ? $product : null;
 	}
 
 	/**

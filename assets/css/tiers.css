@@ -1,48 +1,147 @@
 /* ==========================================================================
-   Tiers – Volume Pricing Table
-   Accessible, no-layout-shift styles. Integrates with WC themes.
+   Tiers – Volume Pricing Table (storefront)
+   Themeable, accessible, Core-Web-Vitals-native styles.
+   No layout shift (space is reserved), no FOUC, graceful in any WC theme.
    ========================================================================== */
 
 .tiers-pricing-table {
-    margin: 1em 0 1.25em;
-    font-size: 0.9em;
+	/* Themeable tokens — override these in your theme to restyle the table. */
+	--tiers-radius: 10px;
+	--tiers-border: rgba(0, 0, 0, 0.1);
+	--tiers-border-soft: rgba(0, 0, 0, 0.06);
+	--tiers-head-bg: rgba(0, 0, 0, 0.04);
+	--tiers-row-hover: rgba(0, 0, 0, 0.03);
+	--tiers-muted: #555;
+	--tiers-accent: #2563eb;
+	--tiers-accent-bg: rgba(37, 99, 235, 0.08);
+	--tiers-pad-block: 0.55em;
+	--tiers-pad-inline: 0.85em;
+	--tiers-gap: clamp(0.75rem, 2vw, 1.25rem);
+
+	margin-block: 1em 1.25em;
+	font-size: 0.9em;
+	container-type: inline-size;
+}
+
+.tiers-pricing-table__heading {
+	margin: 0 0 0.5em;
+	font-weight: 600;
+	font-size: clamp(0.95rem, 0.9rem + 0.5vw, 1.1rem);
+	line-height: 1.3;
 }
 
 .tiers-pricing-table table {
-    width: 100%;
-    border-collapse: collapse;
-    border: 1px solid rgba(0, 0, 0, 0.1);
-    border-radius: 8px;
-    overflow: hidden;
+	width: 100%;
+	border-collapse: collapse;
+	border: 1px solid var(--tiers-border);
+	border-radius: var(--tiers-radius);
+	overflow: hidden;
 }
 
 .tiers-pricing-table thead {
-    background: rgba(0, 0, 0, 0.04);
+	background: var(--tiers-head-bg);
 }
 
 .tiers-pricing-table th,
 .tiers-pricing-table td {
-    padding: 0.5em 0.75em;
-    text-align: left;
-    border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+	padding-block: var(--tiers-pad-block);
+	padding-inline: var(--tiers-pad-inline);
+	text-align: start;
+	border-bottom: 1px solid var(--tiers-border-soft);
+	/* Reserve a stable line box so async price formatting cannot shift rows. */
+	min-height: 1.5em;
 }
 
 .tiers-pricing-table th {
-    font-weight: 600;
-    font-size: 0.85em;
-    text-transform: uppercase;
-    letter-spacing: 0.04em;
-    color: #555;
+	font-weight: 600;
+	font-size: 0.82em;
+	text-transform: uppercase;
+	letter-spacing: 0.04em;
+	color: var(--tiers-muted);
 }
 
 .tiers-pricing-table tbody tr:last-child td {
-    border-bottom: none;
+	border-bottom: none;
 }
 
 .tiers-pricing-table tbody tr:hover {
-    background: rgba(0, 0, 0, 0.02);
+	background: var(--tiers-row-hover);
 }
 
+/* Highlight the best (deepest-discount) tier so the value is obvious. */
+.tiers-pricing-table tbody tr.is-best-tier {
+	background: var(--tiers-accent-bg);
+}
+
+.tiers-pricing-table .tiers-best-badge {
+	display: inline-block;
+	margin-inline-start: 0.4em;
+	padding: 0.05em 0.5em;
+	border-radius: 999px;
+	font-size: 0.72em;
+	font-weight: 600;
+	letter-spacing: 0.02em;
+	text-transform: uppercase;
+	color: #fff;
+	background: var(--tiers-accent);
+	vertical-align: middle;
+}
+
+.tiers-pricing-table .tiers-discount {
+	font-weight: 600;
+	color: var(--tiers-accent);
+}
+
+.tiers-pricing-table .tiers-price .amount,
 .tiers-pricing-table .amount {
-    font-weight: 600;
+	font-weight: 600;
+}
+
+.tiers-pricing-table__empty {
+	margin: 0;
+	padding: var(--tiers-pad-block) var(--tiers-pad-inline);
+	border: 1px dashed var(--tiers-border);
+	border-radius: var(--tiers-radius);
+	color: var(--tiers-muted);
+	font-size: 0.95em;
+}
+
+/* Per-line "You save" note in the cart. */
+.tiers-cart-savings {
+	display: inline-block;
+	margin-block-start: 0.25em;
+	color: var(--tiers-accent);
+	font-weight: 600;
+}
+
+/* Narrow containers: drop the savings emphasis padding a touch. */
+@container (max-width: 22rem) {
+	.tiers-pricing-table th,
+	.tiers-pricing-table td {
+		padding-inline: 0.6em;
+	}
+
+	.tiers-pricing-table .tiers-best-badge {
+		display: none;
+	}
+}
+
+/* Dark mode — only when the visitor prefers it. */
+@media (prefers-color-scheme: dark) {
+	.tiers-pricing-table {
+		--tiers-border: rgba(255, 255, 255, 0.16);
+		--tiers-border-soft: rgba(255, 255, 255, 0.1);
+		--tiers-head-bg: rgba(255, 255, 255, 0.06);
+		--tiers-row-hover: rgba(255, 255, 255, 0.05);
+		--tiers-muted: #aaa;
+		--tiers-accent: #60a5fa;
+		--tiers-accent-bg: rgba(96, 165, 250, 0.12);
+	}
+}
+
+/* Tasteful transitions, motion-safe only. */
+@media (prefers-reduced-motion: no-preference) {
+	.tiers-pricing-table tbody tr {
+		transition: background-color 0.18s ease;
+	}
 }
