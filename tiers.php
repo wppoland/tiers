@@ -69,10 +69,3 @@ add_action(
 	},
 	10
 );
-
-add_action(
-	'init',
-	static function (): void {
-		load_plugin_textdomain( 'tiers', false, dirname( plugin_basename( PLUGIN_FILE ) ) . '/languages' );
-	}
-);

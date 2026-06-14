@@ -1,14 +1,14 @@
-=== Tiers – Volume Pricing for WooCommerce ===
+=== Tiers ===
 Contributors: motylanogha
 Tags: woocommerce, volume pricing, quantity discount, bulk pricing, tiered pricing
-Requires at least: 6.4
+Requires at least: 6.5
 Tested up to: 7.0
 Requires PHP: 8.1
 Stable tag: 0.2.0
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
-Simple, accessible volume / quantity-based pricing tiers for WooCommerce. Configure discount bands in seconds, display a clean pricing table on product pages. No jQuery.
+Accessible quantity / volume pricing tiers for WooCommerce. Set discount bands and show a clean, server-rendered pricing table. No jQuery.
 
 == Description ==
 
