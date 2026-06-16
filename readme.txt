@@ -8,42 +8,36 @@ Stable tag: 0.2.0
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
-Accessible quantity / volume pricing tiers for WooCommerce. Set discount bands and show a clean, server-rendered pricing table. No jQuery.
+Volume pricing tiers for WooCommerce. Set quantity discount bands and show a server-rendered pricing table on product pages. No jQuery.
 
 == Description ==
 
-Tiers adds volume pricing to WooCommerce products: define quantity thresholds and the discount to apply when a customer adds that many units to the cart. A server-rendered pricing table shows the available discounts directly on the product page.
+Tiers gives a WooCommerce store quantity-based pricing. You set the breakpoints — buy 5, save 5%; buy 10, save 10% — and the discount is taken off the line item the moment a shopper carts enough units. The same breakpoints are shown as a table on the product page so people can see the price they'd pay before they add to cart.
 
-**Why Tiers?**
+The discount is calculated in PHP on `woocommerce_before_calculate_totals`, so the pricing logic ships no front-end JavaScript. The product-page table is a plain HTML `<table>` printed server-side with `<th scope>` and a `<caption>`, so it reads correctly to screen readers and doesn't shift the layout as the page loads.
 
-* **No jQuery.** Discounts are computed in PHP on `woocommerce_before_calculate_totals`. Zero front-end JavaScript required for pricing logic.
-* **Server-rendered pricing table.** The pricing table is a plain HTML `<table>` rendered in PHP. No hydration, no layout shift, no waiting.
-* **WCAG 2.2 AA.** The pricing table uses proper `<th scope>` and `<caption>` elements. Screen readers announce quantities and prices correctly.
-* **Highest-tier wins logic.** A customer buying 12 units gets the "10+ units" discount, not the "5+ units" discount. Clean, predictable, no surprises.
-* **No conflicts with WooCommerce coupons.** The discount is applied as a modified line-item price, which WooCommerce totals recalculate correctly.
-* **Compatible with HPOS and Cart/Checkout Blocks.** No reliance on legacy WooCommerce internals.
-* **Clean uninstall.** No custom tables. Remove the plugin and your database is exactly as it was.
+When a quantity matches more than one tier, the deepest qualifying tier applies — 12 units takes the "10+" price, not the "5+" price. Tiers never raises a price either, so a product that's already on sale keeps its lower price.
 
-**Features**
+Tiers declares compatibility with WooCommerce HPOS and the Cart/Checkout Blocks. It stores everything in a single `wp_options` row and creates no custom tables, so deleting the plugin leaves the database as it was.
 
-* Define unlimited global pricing tiers (min quantity → discount percentage)
-* Server-rendered volume pricing table on single product pages
-* Tiers sorted and applied automatically — highest matching tier wins
-* Choose where the table appears: product summary, before/after the add-to-cart form, the product meta area, or place it manually
-* `[tiers_table]` shortcode and a "Volume pricing table" block for manual placement anywhere
-* Optional custom table heading and an optional "You save" column
-* Optional per-line "You save" note under each discounted cart item
-* Optional table visibility toggle
-* Admin settings with a live tier builder (add / remove rows)
-* Fully translatable (Text Domain `tiers`, translations in `/languages`)
-* `tiers/product_tiers` filter for per-product or role-based overrides (PRO)
+**What you get**
+
+* Any number of global pricing tiers, each a minimum quantity and a discount percentage (with an optional label)
+* Automatic discounting in the cart, with the highest matching tier winning
+* A pricing table on single product pages, with a choice of where it appears: product summary, before or after the add-to-cart form, the product meta area, or nowhere automatic
+* A `[tiers_table]` shortcode and a "Volume pricing table" block for dropping the table in by hand
+* An optional heading above the table and an optional "You save" column
+* An optional "You save" note under each discounted line in the cart
+* An admin tier builder that adds and removes rows in place, with a live preview of how each tier reads
+* A Polish translation, plus a bundled POT file for translating into other languages (text domain `tiers`)
+* A `tiers_product_tiers` filter that lets Tiers PRO swap in per-product or role-based tiers
 
 **Documentation:** https://plogins.com/tiers/docs/
 
 == Installation ==
 
 1. Install and activate WooCommerce (8.0 or later).
-2. Upload the `tiers` folder to `/wp-content/plugins/` or install directly from the WordPress plugin directory.
+2. Upload the `tiers` folder to `/wp-content/plugins/`, or grab a copy from https://github.com/wppoland/tiers.
 3. Activate the plugin through the **Plugins** screen.
 4. Go to **WooCommerce → Tiers** and add at least one pricing tier (e.g. 5 units → 5% off).
 5. The pricing table appears automatically on product pages, and discounts apply in the cart.
@@ -81,11 +75,7 @@ Yes. Tiers modifies prices before WooCommerce's tax calculation, so WooCommerce'
 
 == Development ==
 
-The full source (PHP, JS, CSS) is publicly available at:
-
-https://github.com/wppoland/tiers
-
-There is no build step. All shipped assets are the source. There is no obfuscation.
+Tiers is developed in the open. The PHP, JS, and CSS you install are the same files in the repository — nothing is minified or generated by a build step. Read the code, file a bug, or send a patch at https://github.com/wppoland/tiers.
 
 == Changelog ==
 
@@ -95,7 +85,7 @@ There is no build step. All shipped assets are the source. There is no obfuscati
 * New: optional custom table heading.
 * New: optional "You save" column in the pricing table.
 * New: optional per-line "You save" note in the cart.
-* New: full internationalisation — Domain Path `/languages`, bundled `tiers.pot`, and `load_plugin_textdomain()`.
+* New: translation support, with a Domain Path of `/languages`, a bundled `tiers.pot`, and a Polish translation.
 * Fix: define the missing `Tiers\PLUGIN_DIR` constant so the plugin boots reliably.
 * Housekeeping: removed an unused template; expanded coding-standards coverage to templates and blocks.
 
