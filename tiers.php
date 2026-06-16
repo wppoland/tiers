@@ -1,6 +1,6 @@
 <?php
 /**
- * Plugin Name:       Tiers
+ * Plugin Name:       Tiers - Quantity Discounts for WooCommerce
  * Plugin URI:        https://plogins.com/tiers/
  * Description:        Volume and quantity-based tiered pricing for WooCommerce
  * Version:           0.2.0
