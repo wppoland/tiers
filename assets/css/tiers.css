@@ -2,20 +2,23 @@
    Tiers – Volume Pricing Table (storefront)
    Themeable, accessible, Core-Web-Vitals-native styles.
    No layout shift (space is reserved), no FOUC, graceful in any WC theme.
+   The deepest-discount tier is given a spotlight so the saving reads at a glance.
    ========================================================================== */
 
 .tiers-pricing-table {
 	/* Themeable tokens — override these in your theme to restyle the table. */
-	--tiers-radius: 10px;
+	--tiers-radius: 12px;
 	--tiers-border: rgba(0, 0, 0, 0.1);
 	--tiers-border-soft: rgba(0, 0, 0, 0.06);
-	--tiers-head-bg: rgba(0, 0, 0, 0.04);
+	--tiers-head-bg: rgba(0, 0, 0, 0.035);
 	--tiers-row-hover: rgba(0, 0, 0, 0.03);
-	--tiers-muted: #555;
-	--tiers-accent: #2563eb;
-	--tiers-accent-bg: rgba(37, 99, 235, 0.08);
-	--tiers-pad-block: 0.55em;
-	--tiers-pad-inline: 0.85em;
+	--tiers-muted: #5a5a5a;
+	--tiers-accent: #0f766e;        /* deep teal — value you can trust, not a default blue */
+	--tiers-accent-ink: #0b5852;
+	--tiers-accent-bg: rgba(15, 118, 110, 0.07);
+	--tiers-accent-bg-strong: rgba(15, 118, 110, 0.12);
+	--tiers-pad-block: 0.62em;
+	--tiers-pad-inline: 0.9em;
 	--tiers-gap: clamp(0.75rem, 2vw, 1.25rem);
 
 	margin-block: 1em 1.25em;
@@ -32,7 +35,8 @@
 
 .tiers-pricing-table table {
 	width: 100%;
-	border-collapse: collapse;
+	border-collapse: separate;     /* lets the spotlight row carry its own rail + radius */
+	border-spacing: 0;
 	border: 1px solid var(--tiers-border);
 	border-radius: var(--tiers-radius);
 	overflow: hidden;
@@ -50,6 +54,7 @@
 	border-bottom: 1px solid var(--tiers-border-soft);
 	/* Reserve a stable line box so async price formatting cannot shift rows. */
 	min-height: 1.5em;
+	vertical-align: middle;
 }
 
 .tiers-pricing-table th {
@@ -68,25 +73,6 @@
 	background: var(--tiers-row-hover);
 }
 
-/* Highlight the best (deepest-discount) tier so the value is obvious. */
-.tiers-pricing-table tbody tr.is-best-tier {
-	background: var(--tiers-accent-bg);
-}
-
-.tiers-pricing-table .tiers-best-badge {
-	display: inline-block;
-	margin-inline-start: 0.4em;
-	padding: 0.05em 0.5em;
-	border-radius: 999px;
-	font-size: 0.72em;
-	font-weight: 600;
-	letter-spacing: 0.02em;
-	text-transform: uppercase;
-	color: #fff;
-	background: var(--tiers-accent);
-	vertical-align: middle;
-}
-
 .tiers-pricing-table .tiers-discount {
 	font-weight: 600;
 	color: var(--tiers-accent);
@@ -95,6 +81,59 @@
 .tiers-pricing-table .tiers-price .amount,
 .tiers-pricing-table .amount {
 	font-weight: 600;
+	font-variant-numeric: tabular-nums;   /* prices align column-wise */
+}
+
+/* --------------------------------------------------------------------------
+   The one moment that matters: the best (deepest-discount) tier.
+   It lifts out of the table — accent rail on the leading edge, tinted fill,
+   and the price set in the accent ink — so the saving is unmistakable.
+   -------------------------------------------------------------------------- */
+.tiers-pricing-table tbody tr.is-best-tier > td {
+	background: var(--tiers-accent-bg);
+	border-bottom-color: transparent;
+}
+
+.tiers-pricing-table tbody tr.is-best-tier > td:first-child {
+	position: relative;
+	box-shadow: inset 3px 0 0 0 var(--tiers-accent);   /* the price-break rail */
+	border-start-start-radius: calc(var(--tiers-radius) - 4px);
+	border-end-start-radius: calc(var(--tiers-radius) - 4px);
+}
+
+.tiers-pricing-table tbody tr.is-best-tier:hover > td {
+	background: var(--tiers-accent-bg-strong);
+}
+
+.tiers-pricing-table tbody tr.is-best-tier .tiers-price .amount {
+	color: var(--tiers-accent-ink);
+	font-weight: 700;
+}
+
+/* A quiet downward mark on the best price: it has hit its floor. */
+.tiers-pricing-table tbody tr.is-best-tier .tiers-price::before {
+	content: "";
+	display: inline-block;
+	width: 0;
+	height: 0;
+	margin-inline-end: 0.4em;
+	border-inline: 0.32em solid transparent;
+	border-top: 0.36em solid var(--tiers-accent);
+	vertical-align: middle;
+}
+
+.tiers-pricing-table .tiers-best-badge {
+	display: inline-block;
+	margin-inline-start: 0.45em;
+	padding: 0.1em 0.55em;
+	border-radius: 999px;
+	font-size: 0.7em;
+	font-weight: 700;
+	letter-spacing: 0.03em;
+	text-transform: uppercase;
+	color: #fff;
+	background: var(--tiers-accent);
+	vertical-align: middle;
 }
 
 .tiers-pricing-table__empty {
@@ -114,15 +153,16 @@
 	font-weight: 600;
 }
 
-/* Narrow containers: drop the savings emphasis padding a touch. */
+/* Narrow containers: tighten padding; keep the rail + badge (they carry the value). */
 @container (max-width: 22rem) {
 	.tiers-pricing-table th,
 	.tiers-pricing-table td {
-		padding-inline: 0.6em;
+		padding-inline: 0.62em;
 	}
 
-	.tiers-pricing-table .tiers-best-badge {
-		display: none;
+	.tiers-pricing-table th {
+		font-size: 0.76em;
+		letter-spacing: 0.02em;
 	}
 }
 
@@ -133,9 +173,11 @@
 		--tiers-border-soft: rgba(255, 255, 255, 0.1);
 		--tiers-head-bg: rgba(255, 255, 255, 0.06);
 		--tiers-row-hover: rgba(255, 255, 255, 0.05);
-		--tiers-muted: #aaa;
-		--tiers-accent: #60a5fa;
-		--tiers-accent-bg: rgba(96, 165, 250, 0.12);
+		--tiers-muted: #a8a8a8;
+		--tiers-accent: #2dd4bf;
+		--tiers-accent-ink: #5eead4;
+		--tiers-accent-bg: rgba(45, 212, 191, 0.1);
+		--tiers-accent-bg-strong: rgba(45, 212, 191, 0.16);
 	}
 }
 

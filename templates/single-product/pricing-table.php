@@ -95,7 +95,7 @@ foreach ( $tiers_tiers as $tiers_idx => $tiers_row ) {
 
 						if ( $tiers_is_best ) :
 							?>
-							<span class="tiers-best-badge"><?php esc_html_e( 'Best price', 'tiers' ); ?></span>
+							<span class="tiers-best-badge"><?php esc_html_e( 'Best value', 'tiers' ); ?></span>
 							<?php
 						endif;
 						?>
