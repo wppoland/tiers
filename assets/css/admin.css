@@ -4,12 +4,18 @@
    ========================================================================== */
 
 .tiers-settings {
-	--tiers-accent: #2271b1;
-	--tiers-accent-soft: #f0f6fc;
+	/* Accent matches the storefront pricing table (deep teal — value you can
+	   trust, not a default blue) so admin and shopper views read as one plugin.
+	   Contrast vs wp-admin surfaces (computed, WCAG AA):
+	   accent on #fff 5.47:1 / on #f0f0f1 4.81:1; white on accent 5.47:1;
+	   ink on #fff 8.29:1 (used for the small "?" glyph). */
+	--tiers-accent: #0f766e;
+	--tiers-accent-ink: #0b5852;
+	--tiers-accent-soft: #eef6f5;
 	--tiers-border: #dcdcde;
 	--tiers-radius: 8px;
 	--tiers-muted: #646970;
-	--tiers-good: #00a32a;
+	--tiers-good: #007a1c; /* deepened from #00a32a (3.35:1 fail) to 5.53:1 on #fff */
 	--tiers-gap: clamp(0.75rem, 1.5vw, 1.25rem);
 }
 
@@ -46,7 +52,7 @@
 	border: 1px solid var(--tiers-border);
 	border-radius: 999px;
 	background: #fff;
-	color: var(--tiers-accent);
+	color: var(--tiers-accent-ink);
 	font-size: 0.72rem;
 	font-weight: 700;
 	line-height: 1;
