@@ -170,6 +170,7 @@ final class Settings implements HasHooks {
 			array( $this, 'render_placement' ),
 			self::PAGE,
 			self::SECTION,
+			array( 'label_for' => 'tiers_placement' ),
 		);
 
 		add_settings_field(
@@ -178,6 +179,7 @@ final class Settings implements HasHooks {
 			array( $this, 'render_table_heading' ),
 			self::PAGE,
 			self::SECTION,
+			array( 'label_for' => 'tiers_table_heading' ),
 		);
 
 		add_settings_field(
