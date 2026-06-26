@@ -89,7 +89,7 @@ msgid "Reward bigger orders, automatically"
 msgstr ""
 
 #: src/Admin/Settings.php:150
-msgid "Set quantity thresholds and the discount each one unlocks. When a shopper adds enough of a product to their cart, the matching discount is applied automatically — no coupon codes needed. Tiers apply to every product; per-product overrides are available in Tiers PRO."
+msgid "Set quantity thresholds and the discount each one unlocks. When a shopper adds enough of a product to their cart, the matching discount is applied automatically, no coupon codes needed. Tiers apply to every product; per-product overrides are available in Tiers PRO."
 msgstr ""
 
 #: src/Admin/Settings.php:161
@@ -141,7 +141,7 @@ msgid "Display a volume pricing table on single product pages."
 msgstr ""
 
 #: src/Admin/Settings.php:243
-msgid "Shows shoppers the quantity breaks and the price they unlock at each level — a proven nudge to buy more. The discount still applies in the cart even with this turned off."
+msgid "Shows shoppers the quantity breaks and the price they unlock at each level, a proven nudge to buy more. The discount still applies in the cart even with this turned off."
 msgstr ""
 
 #: src/Admin/Settings.php:264
@@ -181,7 +181,7 @@ msgid "Reassures shoppers in the cart by printing the exact amount saved under e
 msgstr ""
 
 #: src/Admin/Settings.php:357
-msgid "No tiers yet. Add your first quantity break below — for example, 10% off when a shopper buys 5 or more."
+msgid "No tiers yet. Add your first quantity break below, for example, 10% off when a shopper buys 5 or more."
 msgstr ""
 
 #: src/Admin/Settings.php:362

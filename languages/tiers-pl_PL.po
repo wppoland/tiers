@@ -92,12 +92,12 @@ msgstr "Nagradzaj większe zamówienia, automatycznie"
 msgid ""
 "Set quantity thresholds and the discount each one unlocks. When a shopper "
 "adds enough of a product to their cart, the matching discount is applied "
-"automatically — no coupon codes needed. Tiers apply to every product; per-"
+"automatically, no coupon codes needed. Tiers apply to every product; per-"
 "product overrides are available in Tiers PRO."
 msgstr ""
 "Ustal progi ilościowe i rabat, jaki odblokowuje każdy z nich. Gdy klient "
 "doda do koszyka wystarczającą ilość produktu, pasujący rabat zostanie "
-"zastosowany automatycznie — bez kodów rabatowych. Progi obowiązują dla "
+"zastosowany automatycznie, bez kodów rabatowych. Progi obowiązują dla "
 "każdego produktu; nadpisania dla pojedynczych produktów są dostępne w Tiers "
 "PRO."
 
@@ -151,11 +151,11 @@ msgstr "Wyświetlaj tabelę cen ilościowych na stronach pojedynczych produktów
 
 #: src/Admin/Settings.php:243
 msgid ""
-"Shows shoppers the quantity breaks and the price they unlock at each level — "
+"Shows shoppers the quantity breaks and the price they unlock at each level, "
 "a proven nudge to buy more. The discount still applies in the cart even with "
 "this turned off."
 msgstr ""
-"Pokazuje klientom progi ilościowe i cenę odblokowywaną na każdym poziomie — "
+"Pokazuje klientom progi ilościowe i cenę odblokowywaną na każdym poziomie, "
 "sprawdzona zachęta do większych zakupów. Rabat działa w koszyku nawet przy "
 "tej opcji wyłączonej."
 
@@ -223,10 +223,10 @@ msgstr ""
 
 #: src/Admin/Settings.php:357
 msgid ""
-"No tiers yet. Add your first quantity break below — for example, 10% off "
+"No tiers yet. Add your first quantity break below, for example, 10% off "
 "when a shopper buys 5 or more."
 msgstr ""
-"Brak progów. Dodaj poniżej swój pierwszy próg ilościowy — na przykład 10% "
+"Brak progów. Dodaj poniżej swój pierwszy próg ilościowy, na przykład 10% "
 "rabatu, gdy klient kupi 5 sztuk lub więcej."
 
 #: src/Admin/Settings.php:362

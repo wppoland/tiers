@@ -148,7 +148,7 @@ final class Settings implements HasHooks {
 				echo '<div class="tiers-settings__intro">';
 				echo '<h2>' . esc_html__( 'Reward bigger orders, automatically', 'tiers' ) . '</h2>';
 				echo '<p>' . esc_html__(
-					'Set quantity thresholds and the discount each one unlocks. When a shopper adds enough of a product to their cart, the matching discount is applied automatically — no coupon codes needed. Tiers apply to every product; per-product overrides are available in Tiers PRO.',
+					'Set quantity thresholds and the discount each one unlocks. When a shopper adds enough of a product to their cart, the matching discount is applied automatically, no coupon codes needed. Tiers apply to every product; per-product overrides are available in Tiers PRO.',
 					'tiers',
 				) . '</p>';
 				echo '</div>';
@@ -242,7 +242,7 @@ final class Settings implements HasHooks {
 		<?php
 		$this->help_icon(
 			'tiers-tip-show-table',
-			__( 'Shows shoppers the quantity breaks and the price they unlock at each level — a proven nudge to buy more. The discount still applies in the cart even with this turned off.', 'tiers' ),
+			__( 'Shows shoppers the quantity breaks and the price they unlock at each level, a proven nudge to buy more. The discount still applies in the cart even with this turned off.', 'tiers' ),
 		);
 	}
 
@@ -356,7 +356,7 @@ final class Settings implements HasHooks {
 		?>
 		<div id="tiers-builder">
 			<p id="tiers-empty" class="tiers-empty"<?php echo $has_tiers ? ' hidden' : ''; ?>>
-				<?php esc_html_e( 'No tiers yet. Add your first quantity break below — for example, 10% off when a shopper buys 5 or more.', 'tiers' ); ?>
+				<?php esc_html_e( 'No tiers yet. Add your first quantity break below, for example, 10% off when a shopper buys 5 or more.', 'tiers' ); ?>
 			</p>
 			<table class="widefat" id="tiers-table"<?php echo $has_tiers ? '' : ' hidden'; ?>>
 				<thead>
