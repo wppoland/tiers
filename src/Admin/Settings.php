@@ -7,12 +7,12 @@
 
 declare(strict_types=1);
 
-namespace Tiers\Admin;
+namespace Plogins\Tiers\Admin;
 
 defined( 'ABSPATH' ) || exit;
 
-use Tiers\Contract\HasHooks;
-use Tiers\Service\TiersService;
+use Plogins\Tiers\Contract\HasHooks;
+use Plogins\Tiers\Service\TiersService;
 
 /**
  * Admin settings page for Tiers, registered under the WooCommerce menu.
@@ -53,8 +53,8 @@ final class Settings implements HasHooks {
 	public function add_menu_page(): void {
 		add_submenu_page(
 			'woocommerce',
-			__( 'Tiers Settings', 'tiers' ),
-			__( 'Tiers', 'tiers' ),
+			__( 'Tiers Settings', 'plogins-tiers' ),
+			__( 'Tiers', 'plogins-tiers' ),
 			'manage_woocommerce',
 			self::PAGE,
 			array( $this, 'render_page' ),
@@ -73,16 +73,16 @@ final class Settings implements HasHooks {
 
 		wp_enqueue_style(
 			'tiers-admin',
-			\Tiers\Plugin::instance()->url( 'assets/css/admin.css' ),
+			\Plogins\Tiers\Plugin::instance()->url( 'assets/css/admin.css' ),
 			array(),
-			\Tiers\VERSION,
+			\Plogins\Tiers\VERSION,
 		);
 
 		wp_enqueue_script(
 			'tiers-admin',
-			\Tiers\Plugin::instance()->url( 'assets/js/admin-tiers.js' ),
+			\Plogins\Tiers\Plugin::instance()->url( 'assets/js/admin-tiers.js' ),
 			array(),
-			\Tiers\VERSION,
+			\Plogins\Tiers\VERSION,
 			array(
 				'in_footer' => true,
 				'strategy'  => 'defer',
@@ -94,13 +94,13 @@ final class Settings implements HasHooks {
 			'tiersAdmin',
 			array(
 				'i18n' => array(
-					'remove'        => __( 'Remove', 'tiers' ),
-					'minQtyLabel'   => __( 'Minimum quantity', 'tiers' ),
-					'discountLabel' => __( 'Discount percent', 'tiers' ),
-					'labelLabel'    => __( 'Label', 'tiers' ),
-					'previewEmpty'  => __( 'Add a tier above to preview how it reads to shoppers.', 'tiers' ),
+					'remove'        => __( 'Remove', 'plogins-tiers' ),
+					'minQtyLabel'   => __( 'Minimum quantity', 'plogins-tiers' ),
+					'discountLabel' => __( 'Discount percent', 'plogins-tiers' ),
+					'labelLabel'    => __( 'Label', 'plogins-tiers' ),
+					'previewEmpty'  => __( 'Add a tier above to preview how it reads to shoppers.', 'plogins-tiers' ),
 					/* translators: %d: minimum quantity (kept as a literal token for JS substitution). */
-					'previewQty'    => __( 'Buy %d+', 'tiers' ),
+					'previewQty'    => __( 'Buy %d+', 'plogins-tiers' ),
 				),
 			),
 		);
@@ -119,7 +119,7 @@ final class Settings implements HasHooks {
 		printf(
 			'<button type="button" class="tiers-help" data-tip="%1$s" aria-label="%2$s">?</button>',
 			esc_attr( $id ),
-			esc_attr__( 'More information', 'tiers' ),
+			esc_attr__( 'More information', 'plogins-tiers' ),
 		);
 		printf(
 			'<span id="%1$s" class="tiers-tip" role="tooltip" popover="auto">%2$s</span>',
@@ -143,13 +143,13 @@ final class Settings implements HasHooks {
 
 		add_settings_section(
 			self::SECTION,
-			__( 'Global Volume Pricing Tiers', 'tiers' ),
+			__( 'Global Volume Pricing Tiers', 'plogins-tiers' ),
 			static function (): void {
 				echo '<div class="tiers-settings__intro">';
-				echo '<h2>' . esc_html__( 'Reward bigger orders, automatically', 'tiers' ) . '</h2>';
+				echo '<h2>' . esc_html__( 'Reward bigger orders, automatically', 'plogins-tiers' ) . '</h2>';
 				echo '<p>' . esc_html__(
 					'Set quantity thresholds and the discount each one unlocks. When a shopper adds enough of a product to their cart, the matching discount is applied automatically, no coupon codes needed. Tiers apply to every product; per-product overrides are available in Tiers PRO.',
-					'tiers',
+					'plogins-tiers',
 				) . '</p>';
 				echo '</div>';
 			},
@@ -158,7 +158,7 @@ final class Settings implements HasHooks {
 
 		add_settings_field(
 			'show_table',
-			__( 'Show pricing table', 'tiers' ),
+			__( 'Show pricing table', 'plogins-tiers' ),
 			array( $this, 'render_show_table' ),
 			self::PAGE,
 			self::SECTION,
@@ -166,7 +166,7 @@ final class Settings implements HasHooks {
 
 		add_settings_field(
 			'placement',
-			__( 'Table placement', 'tiers' ),
+			__( 'Table placement', 'plogins-tiers' ),
 			array( $this, 'render_placement' ),
 			self::PAGE,
 			self::SECTION,
@@ -175,7 +175,7 @@ final class Settings implements HasHooks {
 
 		add_settings_field(
 			'table_heading',
-			__( 'Table heading', 'tiers' ),
+			__( 'Table heading', 'plogins-tiers' ),
 			array( $this, 'render_table_heading' ),
 			self::PAGE,
 			self::SECTION,
@@ -184,7 +184,7 @@ final class Settings implements HasHooks {
 
 		add_settings_field(
 			'show_savings',
-			__( 'Savings column', 'tiers' ),
+			__( 'Savings column', 'plogins-tiers' ),
 			array( $this, 'render_show_savings' ),
 			self::PAGE,
 			self::SECTION,
@@ -192,7 +192,7 @@ final class Settings implements HasHooks {
 
 		add_settings_field(
 			'cart_savings_note',
-			__( 'Cart savings note', 'tiers' ),
+			__( 'Cart savings note', 'plogins-tiers' ),
 			array( $this, 'render_cart_savings_note' ),
 			self::PAGE,
 			self::SECTION,
@@ -200,7 +200,7 @@ final class Settings implements HasHooks {
 
 		add_settings_field(
 			'tiers',
-			__( 'Pricing tiers', 'tiers' ),
+			__( 'Pricing tiers', 'plogins-tiers' ),
 			array( $this, 'render_tiers_field' ),
 			self::PAGE,
 			self::SECTION,
@@ -214,11 +214,11 @@ final class Settings implements HasHooks {
 	 */
 	private function placement_choices(): array {
 		return array(
-			'summary'      => __( 'Product summary (below price)', 'tiers' ),
-			'before_cart'  => __( 'Before the add-to-cart form', 'tiers' ),
-			'after_cart'   => __( 'After the add-to-cart form', 'tiers' ),
-			'product_meta' => __( 'Product meta area', 'tiers' ),
-			'shortcode'    => __( 'Only where I place it (shortcode / block)', 'tiers' ),
+			'summary'      => __( 'Product summary (below price)', 'plogins-tiers' ),
+			'before_cart'  => __( 'Before the add-to-cart form', 'plogins-tiers' ),
+			'after_cart'   => __( 'After the add-to-cart form', 'plogins-tiers' ),
+			'product_meta' => __( 'Product meta area', 'plogins-tiers' ),
+			'shortcode'    => __( 'Only where I place it (shortcode / block)', 'plogins-tiers' ),
 		);
 	}
 
@@ -237,12 +237,12 @@ final class Settings implements HasHooks {
 				value="1"
 				<?php checked( $checked, true ); ?>
 			/>
-			<?php esc_html_e( 'Display a volume pricing table on single product pages.', 'tiers' ); ?>
+			<?php esc_html_e( 'Display a volume pricing table on single product pages.', 'plogins-tiers' ); ?>
 		</label>
 		<?php
 		$this->help_icon(
 			'tiers-tip-show-table',
-			__( 'Shows shoppers the quantity breaks and the price they unlock at each level, a proven nudge to buy more. The discount still applies in the cart even with this turned off.', 'tiers' ),
+			__( 'Shows shoppers the quantity breaks and the price they unlock at each level, a proven nudge to buy more. The discount still applies in the cart even with this turned off.', 'plogins-tiers' ),
 		);
 	}
 
@@ -263,11 +263,11 @@ final class Settings implements HasHooks {
 		<?php
 		$this->help_icon(
 			'tiers-tip-placement',
-			__( 'Controls where the table is auto-inserted on the product page. Pick "Only where I place it" to position it yourself with the [tiers_table] shortcode or the Volume pricing table block.', 'tiers' ),
+			__( 'Controls where the table is auto-inserted on the product page. Pick "Only where I place it" to position it yourself with the [tiers_table] shortcode or the Volume pricing table block.', 'plogins-tiers' ),
 		);
 		?>
 		<p class="description">
-			<?php esc_html_e( 'Where the pricing table appears on the product page. Choose the last option to place it manually with the [tiers_table] shortcode or the "Volume pricing table" block.', 'tiers' ); ?>
+			<?php esc_html_e( 'Where the pricing table appears on the product page. Choose the last option to place it manually with the [tiers_table] shortcode or the "Volume pricing table" block.', 'plogins-tiers' ); ?>
 		</p>
 		<?php
 	}
@@ -285,16 +285,16 @@ final class Settings implements HasHooks {
 			name="<?php echo esc_attr( self::OPTION ); ?>[table_heading]"
 			value="<?php echo esc_attr( $heading ); ?>"
 			class="regular-text"
-			placeholder="<?php esc_attr_e( 'e.g. Buy more, save more', 'tiers' ); ?>"
+			placeholder="<?php esc_attr_e( 'e.g. Buy more, save more', 'plogins-tiers' ); ?>"
 		/>
 		<?php
 		$this->help_icon(
 			'tiers-tip-heading',
-			__( 'A short title rendered directly above the table, e.g. "Buy more, save more". Leave it blank to show just the table.', 'tiers' ),
+			__( 'A short title rendered directly above the table, e.g. "Buy more, save more". Leave it blank to show just the table.', 'plogins-tiers' ),
 		);
 		?>
 		<p class="description">
-			<?php esc_html_e( 'Optional heading shown above the pricing table. Leave blank to hide it.', 'tiers' ); ?>
+			<?php esc_html_e( 'Optional heading shown above the pricing table. Leave blank to hide it.', 'plogins-tiers' ); ?>
 		</p>
 		<?php
 	}
@@ -314,12 +314,12 @@ final class Settings implements HasHooks {
 				value="1"
 				<?php checked( $checked, true ); ?>
 			/>
-			<?php esc_html_e( 'Add a "You save" column to the pricing table.', 'tiers' ); ?>
+			<?php esc_html_e( 'Add a "You save" column to the pricing table.', 'plogins-tiers' ); ?>
 		</label>
 		<?php
 		$this->help_icon(
 			'tiers-tip-show-savings',
-			__( 'Adds a column showing the cash saved per unit at each tier. Concrete savings figures convert better than a percentage alone.', 'tiers' ),
+			__( 'Adds a column showing the cash saved per unit at each tier. Concrete savings figures convert better than a percentage alone.', 'plogins-tiers' ),
 		);
 	}
 
@@ -338,12 +338,12 @@ final class Settings implements HasHooks {
 				value="1"
 				<?php checked( $checked, true ); ?>
 			/>
-			<?php esc_html_e( 'Show a per-line "You save" note under each discounted cart item.', 'tiers' ); ?>
+			<?php esc_html_e( 'Show a per-line "You save" note under each discounted cart item.', 'plogins-tiers' ); ?>
 		</label>
 		<?php
 		$this->help_icon(
 			'tiers-tip-cart-note',
-			__( 'Reassures shoppers in the cart by printing the exact amount saved under each qualifying line item. Reinforces the discount right before checkout.', 'tiers' ),
+			__( 'Reassures shoppers in the cart by printing the exact amount saved under each qualifying line item. Reinforces the discount right before checkout.', 'plogins-tiers' ),
 		);
 	}
 
@@ -356,14 +356,14 @@ final class Settings implements HasHooks {
 		?>
 		<div id="tiers-builder">
 			<p id="tiers-empty" class="tiers-empty"<?php echo $has_tiers ? ' hidden' : ''; ?>>
-				<?php esc_html_e( 'No tiers yet. Add your first quantity break below, for example, 10% off when a shopper buys 5 or more.', 'tiers' ); ?>
+				<?php esc_html_e( 'No tiers yet. Add your first quantity break below, for example, 10% off when a shopper buys 5 or more.', 'plogins-tiers' ); ?>
 			</p>
 			<table class="widefat" id="tiers-table"<?php echo $has_tiers ? '' : ' hidden'; ?>>
 				<thead>
 					<tr>
-						<th><?php esc_html_e( 'Min. quantity', 'tiers' ); ?></th>
-						<th><?php esc_html_e( 'Discount %', 'tiers' ); ?></th>
-						<th><?php esc_html_e( 'Label (optional)', 'tiers' ); ?></th>
+						<th><?php esc_html_e( 'Min. quantity', 'plogins-tiers' ); ?></th>
+						<th><?php esc_html_e( 'Discount %', 'plogins-tiers' ); ?></th>
+						<th><?php esc_html_e( 'Label (optional)', 'plogins-tiers' ); ?></th>
 						<?php do_action( 'tiers_admin_settings_table_header' ); ?>
 						<th></th>
 					</tr>
@@ -379,7 +379,7 @@ final class Settings implements HasHooks {
 									min="1"
 									step="1"
 									class="small-text"
-									aria-label="<?php esc_attr_e( 'Minimum quantity', 'tiers' ); ?>"
+									aria-label="<?php esc_attr_e( 'Minimum quantity', 'plogins-tiers' ); ?>"
 									required
 								/>
 							</td>
@@ -392,7 +392,7 @@ final class Settings implements HasHooks {
 									max="100"
 									step="0.01"
 									class="small-text"
-									aria-label="<?php esc_attr_e( 'Discount percent', 'tiers' ); ?>"
+									aria-label="<?php esc_attr_e( 'Discount percent', 'plogins-tiers' ); ?>"
 									required
 								/>
 							</td>
@@ -402,13 +402,13 @@ final class Settings implements HasHooks {
 									name="<?php echo esc_attr( self::OPTION ); ?>[tiers][<?php echo esc_attr( (string) $i ); ?>][label]"
 									value="<?php echo esc_attr( $tier['label'] ); ?>"
 									class="regular-text"
-									aria-label="<?php esc_attr_e( 'Tier label (optional)', 'tiers' ); ?>"
+									aria-label="<?php esc_attr_e( 'Tier label (optional)', 'plogins-tiers' ); ?>"
 								/>
 							</td>
 							<?php do_action( 'tiers_admin_settings_table_row', $tier, $i ); ?>
 							<td>
 								<button type="button" class="button tiers-remove-row">
-									<?php esc_html_e( 'Remove', 'tiers' ); ?>
+									<?php esc_html_e( 'Remove', 'plogins-tiers' ); ?>
 								</button>
 							</td>
 						</tr>
@@ -417,24 +417,24 @@ final class Settings implements HasHooks {
 			</table>
 			<p>
 				<button type="button" id="tiers-add-row" class="button">
-					<?php esc_html_e( '+ Add tier', 'tiers' ); ?>
+					<?php esc_html_e( '+ Add tier', 'plogins-tiers' ); ?>
 				</button>
 			</p>
 			<div class="tiers-preview" aria-live="polite">
 				<p class="tiers-preview__title">
-					<?php esc_html_e( 'Live preview', 'tiers' ); ?>
+					<?php esc_html_e( 'Live preview', 'plogins-tiers' ); ?>
 				</p>
 				<div id="tiers-preview-list"></div>
 			</div>
 		</div>
 		<p class="description">
 			<?php
-			esc_html_e( 'The highest matching tier wins. E.g., buying 12 units gets the "10+" discount, not the "5+" discount.', 'tiers' );
+			esc_html_e( 'The highest matching tier wins. E.g., buying 12 units gets the "10+" discount, not the "5+" discount.', 'plogins-tiers' );
 			?>
 			<?php
 			$this->help_icon(
 				'tiers-tip-tiers',
-				__( 'Minimum quantity is the smallest cart amount that unlocks the tier. Discount % is taken off the regular price. Label is optional copy a shopper sees (e.g. "Bulk deal"). Tiers are sorted automatically by quantity.', 'tiers' ),
+				__( 'Minimum quantity is the smallest cart amount that unlocks the tier. Discount % is taken off the regular price. Label is optional copy a shopper sees (e.g. "Bulk deal"). Tiers are sorted automatically by quantity.', 'plogins-tiers' ),
 			);
 			?>
 		</p>

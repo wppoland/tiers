@@ -8,7 +8,7 @@
 	"icon": "editor-table",
 	"description": "Server-rendered volume pricing table for the current or a chosen WooCommerce product.",
 	"keywords": ["woocommerce", "pricing", "tiers", "volume", "quantity"],
-	"textdomain": "tiers",
+	"textdomain": "plogins-tiers",
 	"supports": {
 		"html": false,
 		"align": ["wide", "full"]

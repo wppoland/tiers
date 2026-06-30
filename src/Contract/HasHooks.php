@@ -9,7 +9,7 @@
 
 declare(strict_types=1);
 
-namespace Tiers\Contract;
+namespace Plogins\Tiers\Contract;
 
 defined( 'ABSPATH' ) || exit;
 

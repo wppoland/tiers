@@ -10,13 +10,13 @@
 
 declare(strict_types=1);
 
-namespace Tiers;
+namespace Plogins\Tiers;
 
 defined( 'ABSPATH' ) || exit;
 
-use Tiers\Admin\Settings;
-use Tiers\Service\TiersService;
-use Tiers\Util\TemplateLoader;
+use Plogins\Tiers\Admin\Settings;
+use Plogins\Tiers\Service\TiersService;
+use Plogins\Tiers\Util\TemplateLoader;
 
 return static function ( Container $c ): void {
 	// Utilities.

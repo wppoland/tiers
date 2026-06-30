@@ -7,12 +7,12 @@
 
 declare(strict_types=1);
 
-namespace Tiers\Service;
+namespace Plogins\Tiers\Service;
 
 defined( 'ABSPATH' ) || exit;
 
-use Tiers\Contract\HasHooks;
-use Tiers\Util\TemplateLoader;
+use Plogins\Tiers\Contract\HasHooks;
+use Plogins\Tiers\Util\TemplateLoader;
 
 /**
  * Volume / quantity-based pricing tiers for WooCommerce.
@@ -104,7 +104,7 @@ final class TiersService implements HasHooks {
 	 * Register the server-rendered Tiers table block.
 	 */
 	public function register_block(): void {
-		$metadata = \Tiers\PLUGIN_DIR . '/blocks/tiers-table';
+		$metadata = \Plogins\Tiers\PLUGIN_DIR . '/blocks/tiers-table';
 
 		if ( function_exists( 'register_block_type' ) && file_exists( $metadata . '/block.json' ) ) {
 			register_block_type(
@@ -152,9 +152,9 @@ final class TiersService implements HasHooks {
 
 		wp_register_style(
 			'tiers-pricing',
-			\Tiers\Plugin::instance()->url( 'assets/css/tiers.css' ),
+			\Plogins\Tiers\Plugin::instance()->url( 'assets/css/tiers.css' ),
 			array(),
-			\Tiers\VERSION,
+			\Plogins\Tiers\VERSION,
 		);
 	}
 
@@ -332,7 +332,7 @@ final class TiersService implements HasHooks {
 
 		return $subtotal . '<br /><small class="tiers-cart-savings">' . sprintf(
 			/* translators: %s: formatted saved amount */
-			esc_html__( 'You save %s', 'tiers' ),
+			esc_html__( 'You save %s', 'plogins-tiers' ),
 			wp_kses_post( wc_price( $saved ) )
 		) . '</small>';
 	}

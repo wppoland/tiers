@@ -8,8 +8,8 @@ declare(strict_types=1);
  */
 
 define( 'ABSPATH', '/tmp/' );
-define( 'Tiers\VERSION', '0.1.0' );
-define( 'Tiers\PLUGIN_FILE', '/tmp/tiers.php' );
-define( 'Tiers\PLUGIN_DIR', '/tmp' );
-define( 'Tiers\MIN_PHP_VERSION', '8.1.0' );
-define( 'Tiers\MIN_WC_VERSION', '8.0.0' );
+define( 'Plogins\Tiers\VERSION', '0.1.0' );
+define( 'Plogins\Tiers\PLUGIN_FILE', '/tmp/tiers.php' );
+define( 'Plogins\Tiers\PLUGIN_DIR', '/tmp' );
+define( 'Plogins\Tiers\MIN_PHP_VERSION', '8.1.0' );
+define( 'Plogins\Tiers\MIN_WC_VERSION', '8.0.0' );

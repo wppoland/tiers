@@ -2,7 +2,7 @@
 <ruleset name="Tiers">
     <description>Tiers WordPress Coding Standards</description>
 
-    <file>tiers.php</file>
+    <file>plogins-tiers.php</file>
     <file>uninstall.php</file>
     <file>autoload.php</file>
     <file>src</file>

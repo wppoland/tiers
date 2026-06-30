@@ -2,7 +2,7 @@
 /**
  * PSR-4 autoloader for the Tiers plugin.
  *
- * Maps the Tiers\ namespace to src/, with no Composer overhead.
+ * Maps the Plogins\Tiers\ namespace to src/, with no Composer overhead.
  *
  * @package Tiers
  */
@@ -13,11 +13,11 @@ defined( 'ABSPATH' ) || exit;
 
 spl_autoload_register(
 	static function ( string $class_name ): void {
-		if ( 0 !== strncmp( $class_name, 'Tiers\\', 6 ) ) {
+		if ( 0 !== strncmp( $class_name, 'Plogins\\Tiers\\', 14 ) ) {
 			return;
 		}
 
-		$relative = str_replace( '\\', '/', substr( $class_name, 6 ) );
+		$relative = str_replace( '\\', '/', substr( $class_name, 14 ) );
 		$base_dir = __DIR__ . '/src/';
 		$file     = $base_dir . $relative . '.php';
 

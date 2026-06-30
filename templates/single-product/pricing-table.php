@@ -24,7 +24,7 @@ if ( empty( $tiers_tiers ) ) :
 			<p class="tiers-pricing-table__heading"><?php echo esc_html( $tiers_heading ); ?></p>
 		<?php endif; ?>
 		<p class="tiers-pricing-table__empty">
-			<?php esc_html_e( 'No volume discounts are available for this product yet.', 'tiers' ); ?>
+			<?php esc_html_e( 'No volume discounts are available for this product yet.', 'plogins-tiers' ); ?>
 		</p>
 	</div>
 	<?php
@@ -42,21 +42,21 @@ foreach ( $tiers_tiers as $tiers_idx => $tiers_row ) {
 	}
 }
 ?>
-<div class="tiers-pricing-table" aria-label="<?php esc_attr_e( 'Volume pricing', 'tiers' ); ?>">
+<div class="tiers-pricing-table" aria-label="<?php esc_attr_e( 'Volume pricing', 'plogins-tiers' ); ?>">
 	<?php if ( '' !== $tiers_heading ) : ?>
 		<p class="tiers-pricing-table__heading"><?php echo esc_html( $tiers_heading ); ?></p>
 	<?php endif; ?>
 	<table>
 		<caption class="screen-reader-text">
-			<?php echo '' !== $tiers_heading ? esc_html( $tiers_heading ) : esc_html__( 'Volume pricing tiers', 'tiers' ); ?>
+			<?php echo '' !== $tiers_heading ? esc_html( $tiers_heading ) : esc_html__( 'Volume pricing tiers', 'plogins-tiers' ); ?>
 		</caption>
 		<thead>
 			<tr>
-				<th scope="col"><?php esc_html_e( 'Quantity', 'tiers' ); ?></th>
-				<th scope="col"><?php esc_html_e( 'Discount', 'tiers' ); ?></th>
-				<th scope="col"><?php esc_html_e( 'Price', 'tiers' ); ?></th>
+				<th scope="col"><?php esc_html_e( 'Quantity', 'plogins-tiers' ); ?></th>
+				<th scope="col"><?php esc_html_e( 'Discount', 'plogins-tiers' ); ?></th>
+				<th scope="col"><?php esc_html_e( 'Price', 'plogins-tiers' ); ?></th>
 				<?php if ( $tiers_show_savings ) : ?>
-					<th scope="col"><?php esc_html_e( 'You save', 'tiers' ); ?></th>
+					<th scope="col"><?php esc_html_e( 'You save', 'plogins-tiers' ); ?></th>
 				<?php endif; ?>
 			</tr>
 		</thead>
@@ -81,21 +81,21 @@ foreach ( $tiers_tiers as $tiers_idx => $tiers_row ) {
 						if ( null !== $tiers_next_min ) {
 							printf(
 								/* translators: 1: min quantity, 2: max quantity */
-								esc_html_x( '%1$d – %2$d', 'quantity range', 'tiers' ),
+								esc_html_x( '%1$d – %2$d', 'quantity range', 'plogins-tiers' ),
 								esc_html( (string) $tiers_tier['min_qty'] ),
 								esc_html( (string) $tiers_next_min ),
 							);
 						} else {
 							printf(
 								/* translators: %d: minimum quantity */
-								esc_html_x( '%d+', 'quantity, no upper limit', 'tiers' ),
+								esc_html_x( '%d+', 'quantity, no upper limit', 'plogins-tiers' ),
 								esc_html( (string) $tiers_tier['min_qty'] ),
 							);
 						}
 
 						if ( $tiers_is_best ) :
 							?>
-							<span class="tiers-best-badge"><?php esc_html_e( 'Best value', 'tiers' ); ?></span>
+							<span class="tiers-best-badge"><?php esc_html_e( 'Best value', 'plogins-tiers' ); ?></span>
 							<?php
 						endif;
 						?>
@@ -105,7 +105,7 @@ foreach ( $tiers_tiers as $tiers_idx => $tiers_row ) {
 						<?php
 						printf(
 							/* translators: %s: discount percentage */
-							esc_html__( '%s%% off', 'tiers' ),
+							esc_html__( '%s%% off', 'plogins-tiers' ),
 							esc_html( (string) $tiers_percent )
 						);
 						?>
